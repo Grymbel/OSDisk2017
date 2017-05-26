@@ -1,0 +1,7 @@
+package application;
+
+public class OSDController {
+	public void initialize(){
+		OSD osd = new OSD(1,2,10,3);
+	}
+}
