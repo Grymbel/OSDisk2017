@@ -60,7 +60,7 @@ public class FileController {
 			PrintWriter outFile = new PrintWriter(bw);
 
 			for(int i =0;i<strings.size();i++){
-			outFile.append(strings.get(i)+"\n");
+			outFile.append(strings.get(i));
 			}
 			
 			outFile.close();
@@ -71,23 +71,71 @@ public class FileController {
 	      }
 	}
 	
-	public ArrayList<String> getData(){
+	public void clearTXT(){
+		try{
+			FileWriter fw = new FileWriter(this.filename);
+			fw.write("");
+			fw.close();
+			System.out.println("Cleared: " + this.filename);
+	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
+	}
+	
+	public ArrayList<Integer> getData(){
 		try{
 	         FileReader fr = new FileReader (this.filename);
 	         Scanner sc = new Scanner(fr);
 	         sc.useDelimiter(";");
 	         
-	         ArrayList<String> toRet = new ArrayList<String>();
+	         ArrayList<Integer> toRet = new ArrayList<Integer>();
 
 			 //read in the file line by line
-	         while (sc.hasNextLine()){
-	            toRet.add(sc.next());
+	         while (sc.hasNext()){
+	            toRet.add(Integer.parseInt(sc.next()));
 	         }
 
 	         fr.close();
 	         sc.close();
 	         
 	         return toRet;
+	      }
+	      catch (FileNotFoundException exception){
+	         System.out.println ("The file " + this.filename + " was not found.");
+	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
+		System.out.println("Something went wrong");
+		return null;
+	}
+	
+	public String getDataNicely(){
+		try{
+	         FileReader fr = new FileReader (this.filename);
+	         Scanner sc = new Scanner(fr);
+	         sc.useDelimiter(";");
+	         
+	         String outLine="";
+			 //read in the file line by line
+	         
+	         int every8 = 0;
+	         while (sc.hasNext()){
+	        	if(every8!=7){
+	            outLine = outLine+" "+sc.next();
+	            every8++;
+	        	}
+	        	else if(every8==7){
+	        		outLine = outLine+" "+sc.next()+"\n";
+		            every8=0;
+	        	}
+	         }
+
+	         fr.close();
+	         sc.close();
+	         
+	         return outLine;
 	      }
 	      catch (FileNotFoundException exception){
 	         System.out.println ("The file " + this.filename + " was not found.");
