@@ -10,6 +10,9 @@ public class OSDController {
 
 	@FXML
     private Button btnMakeData;
+	
+	@FXML 
+	private Button btnLoadData;
 
     @FXML
     private TextField tfPrev;
@@ -27,11 +30,69 @@ public class OSDController {
     private TextArea taOutput;
 
     @FXML
+    private TextField tfPrev1;
+
+    @FXML
+    private TextField tfCurr1;
+
+    @FXML
+    private TextField tfCyl1;
+
+    @FXML
+    private TextField tfInputs1;
+    
+    @FXML
+    private Button btnFCFS;
+
+    @FXML
+    private Button btnSSTF;
+
+    @FXML
+    private Button btnScan;
+
+    @FXML
+    private Button btnLook;
+
+    @FXML
+    private TextArea taPath;
+
+    @FXML
+    private TextArea taDistance;
+    
+    @FXML
     void makeDatas(ActionEvent event) {
     	OSD osd = new OSD(Integer.parseInt(tfPrev.getText()),Integer.parseInt(tfCurr.getText()),Integer.parseInt(tfCyl.getText()),Integer.parseInt(tfInputs.getText()));
 		osd.makeData();
 		
 		taOutput.setText(osd.getDataNicely());
+    }
+    
+    @FXML
+    void loadDatas(ActionEvent event) {
+    	OSD osd = new OSD(Integer.parseInt(tfPrev1.getText()),Integer.parseInt(tfCurr1.getText()),Integer.parseInt(tfCyl1.getText()),tfInputs1.getText());
+    	osd.startData();
+    	
+    	taOutput.setText(osd.getDataNicely());
+    }
+    
+    @FXML
+    void doFCFS(ActionEvent event) {
+    	OSD osd = new OSD();
+    }
+
+    @FXML
+    void doLook(ActionEvent event) {
+
+    }
+
+    @FXML
+    void doSSTF(ActionEvent event) {
+
+    }
+
+    @FXML
+    void doScan(ActionEvent event) {
+
     }
     
 	public void initialize(){

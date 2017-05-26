@@ -16,18 +16,16 @@ public class FileController {
 		this.filename=filename;
 	}
 	
-	public void printOut(){
+	public String printOut(){
 		try{
 	         FileReader fr = new FileReader (this.filename);
 	         Scanner sc = new Scanner(fr);
 
-			 //read in the file line by line
-	         while (sc.hasNextLine()){
-	            System.out.println(sc.nextLine());
-	         }
-
+			
 	         fr.close();
 	         sc.close();
+	         
+	         return sc.nextLine();
 	      }
 	      catch (FileNotFoundException exception){
 	         System.out.println ("The file " + this.filename + " was not found.");
@@ -35,6 +33,7 @@ public class FileController {
 	      catch (IOException exception){
 	         System.out.println (exception);
 	      }
+		return null;
 	}
 	
 	public void appendLine(String toAppend){
@@ -121,6 +120,7 @@ public class FileController {
 			 //read in the file line by line
 	         
 	         int every8 = 0;
+	         sc.next();
 	         while (sc.hasNext()){
 	        	if(every8!=7){
 	            outLine = outLine+" "+sc.next();

@@ -1,7 +1,7 @@
 package application;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class OSD {
 	private String inputData = System.getProperty("user.dir")+"/src/application/data/OSDData.txt";
@@ -25,12 +25,70 @@ public class OSD {
 		}
 	}
 	
+	public OSD(int prev, int curr, int cyl, String sequence){
+		
+		this.previous=prev;
+		this.current=curr;
+		this.cylinders=cyl;
+		this.inputLength=0;
+		Scanner sc = new Scanner(sequence);
+		sc.useDelimiter(",");
+		
+		while(sc.hasNext()){
+			this.dataList.add(Integer.parseInt(sc.next()));
+			inputLength++;
+		}
+		if(inputLength>cyl){
+			System.out.println("INPUT LENGTH LONGER THAN CYNLINDERS ALLOW");
+		}
+		sc.close();
+		}
+	
+	public OSD(){
+		FileController fc = new FileController(inputData);
+		Scanner sc = new Scanner(fc.printOut());
+		
+		sc.useDelimiter(";");
+		
+		this.cylinders=Integer.parseInt(sc.next().replace("&", ""));
+		this.previous=Integer.parseInt(sc.next());
+		this.dataList.add(this.previous);
+		this.current=Integer.parseInt(sc.next());
+		this.dataList.add(this.current);
+		
+		while(sc.hasNext()){
+			this.dataList.add(Integer.parseInt(sc.next()));
+		}
+		sc.close();
+	}
+
+	public void startData(){
+		
+		FileController fc = new FileController(inputData);
+		
+		fc.clearTXT();
+		
+		ArrayList<String> toWrite = new ArrayList<String>();
+		toWrite.add(this.cylinders+"&;");
+		
+		toWrite.add(this.previous+";");
+		toWrite.add(this.current+";");
+		
+		for(int o=0;o<this.dataList.size();o++){
+		toWrite.add(this.dataList.get(o)+";");
+		}
+		
+		fc.appendLine(toWrite);
+	}
+	
 	public void makeData(){
 		FileController fc = new FileController(inputData);
 		
 		fc.clearTXT();
 		
 		ArrayList<String> toWrite = new ArrayList<String>();
+		toWrite.add(this.cylinders+"&;");
+		
 		toWrite.add(previous+";");
 		toWrite.add(current+";");
 		int toAdd;
@@ -46,6 +104,13 @@ public class OSD {
 				}
 			}
 			fc.appendLine(toWrite);
+			
+			dataList.add(previous);
+			dataList.add(current);
+			
+			for(int i=1;i<toWrite.size();i++){
+				dataList.add(Integer.parseInt(toWrite.get(i).replace(";", "")));
+			}
 		}
 	
 	public String getDataNicely(){
@@ -82,6 +147,14 @@ public class OSD {
 
 	public void setInputLength(int inputLength) {
 		this.inputLength = inputLength;
+	}
+
+	public ArrayList<Integer> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(ArrayList<Integer> dataList) {
+		this.dataList = dataList;
 	}
 }
 
