@@ -20,10 +20,6 @@ public class FileController {
 		try{
 	         FileReader fr = new FileReader (this.filename);
 	         Scanner sc = new Scanner(fr);
-
-			
-	         fr.close();
-	         sc.close();
 	         
 	         return sc.nextLine();
 	      }

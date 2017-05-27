@@ -61,7 +61,47 @@ public class OSD {
 		}
 		sc.close();
 	}
-
+	
+	public String[] FCFS(){
+		String[] toRet = new String[3];
+		
+		toRet[0]="FCFS\n====\n";
+		
+		String orderOfAccess = "Order of Access: ";
+		
+		for(int i=1;i<this.dataList.size();i++){
+			orderOfAccess=orderOfAccess+this.dataList.get(i)+", ";
+		}
+		toRet[1]=orderOfAccess;
+		
+		String totalDistance="Total Distance = ";
+		String higherSequence="";
+		
+		int total=0;
+		
+		for(int i=2;i<this.dataList.size();i++){
+			int prev = dataList.get(i-1);
+			int curr = dataList.get(i);
+			if(i==2){
+				totalDistance = totalDistance + "|"+prev+"-"+curr+"|";
+			}else{
+			totalDistance = totalDistance + "+|"+prev+"-"+curr+"|";
+			}
+			total=total+Math.abs(prev-curr);
+			
+			if(i==2){
+				higherSequence = higherSequence+Math.abs(prev-curr);
+			}
+			else{
+				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
+			}
+		}
+		
+		totalDistance = totalDistance +"\n="+ higherSequence + "\n="+total;
+		toRet[2]=totalDistance;
+		return toRet;
+	}
+	
 	public void startData(){
 		
 		FileController fc = new FileController(inputData);

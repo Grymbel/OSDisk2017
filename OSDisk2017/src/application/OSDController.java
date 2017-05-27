@@ -78,6 +78,10 @@ public class OSDController {
     @FXML
     void doFCFS(ActionEvent event) {
     	OSD osd = new OSD();
+    	String strings[] = osd.FCFS();
+    	
+    	taPath.setText(strings[0]+strings[1]);
+    	taDistance.setText(strings[2]);
     }
 
     @FXML
