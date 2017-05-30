@@ -42,7 +42,7 @@ public class OSD {
 			System.out.println("INPUT LENGTH LONGER THAN CYNLINDERS ALLOW");
 		}
 		sc.close();
-		}
+	}
 	
 	public OSD(){
 		FileController fc = new FileController(inputData);
