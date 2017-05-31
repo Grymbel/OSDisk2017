@@ -59,7 +59,6 @@ public class OSDController {
     @FXML
     private TextArea taDistance;
     
-    //Random generation within user defined parameters
     @FXML
     void makeDatas(ActionEvent event) {
     	OSD osd = new OSD(Integer.parseInt(tfPrev.getText()),Integer.parseInt(tfCurr.getText()),Integer.parseInt(tfCyl.getText()),Integer.parseInt(tfInputs.getText()));
@@ -68,7 +67,6 @@ public class OSDController {
 		taOutput.setText(osd.getDataNicely());
     }
     
-    //Formatting user defined input into data usable by this application
     @FXML
     void loadDatas(ActionEvent event) {
     	OSD osd = new OSD(Integer.parseInt(tfPrev1.getText()),Integer.parseInt(tfCurr1.getText()),Integer.parseInt(tfCyl1.getText()),tfInputs1.getText());
@@ -77,7 +75,6 @@ public class OSDController {
     	taOutput.setText(osd.getDataNicely());
     }
     
-    //Initiate the FCFS process
     @FXML
     void doFCFS(ActionEvent event) {
     	OSD osd = new OSD();
@@ -87,7 +84,6 @@ public class OSDController {
     	taDistance.setText(strings[2]);
     }
 
-    //Initiate the SSTF process
     @FXML
     void doSSTF(ActionEvent event) {
     	OSD osd = new OSD();
@@ -97,7 +93,6 @@ public class OSDController {
     	taDistance.setText(strings[2]);
     }
     
-    //Initiate the CScan process
     @FXML
     void doCScan(ActionEvent event) {
     	OSD osd=new OSD();
@@ -107,7 +102,6 @@ public class OSDController {
     	taDistance.setText(strings[2]);
     }
 
-    //Initiate the CLook process
     @FXML
     void doCLook(ActionEvent event) {
     	OSD osd=new OSD();
@@ -116,4 +110,8 @@ public class OSDController {
     	taPath.setText(strings[0]+strings[1]);
     	taDistance.setText(strings[2]);
     }
+    
+	public void initialize(){
+		System.out.println("I STARTED!");
+	}
 }

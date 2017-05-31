@@ -107,7 +107,6 @@ public class OSDController {
     	taDistance.setText(strings[2]);
     }
 
-    //Initiate the CLook process
     @FXML
     void doCLook(ActionEvent event) {
     	OSD osd=new OSD();
@@ -116,4 +115,8 @@ public class OSDController {
     	taPath.setText(strings[0]+strings[1]);
     	taDistance.setText(strings[2]);
     }
+    
+	public void initialize(){
+		System.out.println("I STARTED!");
+	}
 }

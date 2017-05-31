@@ -358,8 +358,6 @@ public class OSD {
 		for(int i=1;i<sequence.length;i++){
 			if(i==1){
 				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
-			}else if((i)%3==0){
-				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|\n";
 			}else{
 				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
 			}
@@ -377,7 +375,6 @@ public class OSD {
 	}
 	
 	public static int[] toArray(ArrayList<Integer> arrayL){
-		//Converts and arraylist to array
 		int[] toRet = new int[arrayL.size()];
 		
 		for(int i=0;i<arrayL.size();i++){
@@ -387,7 +384,6 @@ public class OSD {
 		return toRet;
 	}
 
-	//A lot of getters and setters
 	public int getPrevious() {
 		return previous;
 	}

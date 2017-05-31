@@ -79,7 +79,7 @@ public class FileController {
 	      }
 	}
 	
-	//Returns a formatted output to display on the UI
+	
 	public String getDataNicely(){
 		try{
 	         FileReader fr = new FileReader (this.filename);
@@ -116,8 +116,32 @@ public class FileController {
 		System.out.println("Something went wrong");
 		return null;
 	}
-	
-	//Getters and setters
+	public boolean isMyFileFilled(){
+		try{
+	         FileReader fr = new FileReader (this.filename);
+	         Scanner sc = new Scanner(fr);
+	         sc.useDelimiter(";");
+	         
+			 //read in the file line by line
+	         while (sc.hasNextLine()){
+	        	 fr.close();
+		         sc.close();
+		         
+		         return true;
+	         }
+	         sc.close();
+	         
+	      }
+	      catch (FileNotFoundException exception){
+	         System.out.println ("The file " + this.filename + " was not found.");
+	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
+		System.out.println("File's Empty");
+		return false;
+	}
+
 	public String getFilename() {
 		return filename;
 	}

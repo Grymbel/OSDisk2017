@@ -16,7 +16,6 @@ public class FileController {
 		this.filename=filename;
 	}
 	
-	//Returns the data from the TXT
 	public String printOut(){
 		try{
 	         FileReader fr = new FileReader (this.filename);
@@ -27,10 +26,12 @@ public class FileController {
 	      catch (FileNotFoundException exception){
 	         System.out.println ("The file " + this.filename + " was not found.");
 	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
 		return null;
 	}
 	
-	//Writes a string to the TXT
 	public void appendLine(String toAppend){
 		try{
 			FileWriter fw = new FileWriter(this.filename,true);
@@ -47,7 +48,6 @@ public class FileController {
 	      }
 	   }
 	
-	//Formats and writes an array list to the TXT
 	public void appendLine(ArrayList<String> strings){
 		try{
 			FileWriter fw = new FileWriter(this.filename,true);
@@ -66,7 +66,6 @@ public class FileController {
 	      }
 	}
 	
-	//Wipes the TXT clean
 	public void clearTXT(){
 		try{
 			FileWriter fw = new FileWriter(this.filename);
@@ -79,7 +78,34 @@ public class FileController {
 	      }
 	}
 	
-	//Returns a formatted output to display on the UI
+	public ArrayList<Integer> getData(){
+		try{
+	         FileReader fr = new FileReader (this.filename);
+	         Scanner sc = new Scanner(fr);
+	         sc.useDelimiter(";");
+	         
+	         ArrayList<Integer> toRet = new ArrayList<Integer>();
+
+			 //read in the file line by line
+	         while (sc.hasNext()){
+	            toRet.add(Integer.parseInt(sc.next()));
+	         }
+
+	         fr.close();
+	         sc.close();
+	         
+	         return toRet;
+	      }
+	      catch (FileNotFoundException exception){
+	         System.out.println ("The file " + this.filename + " was not found.");
+	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
+		System.out.println("Something went wrong");
+		return null;
+	}
+	
 	public String getDataNicely(){
 		try{
 	         FileReader fr = new FileReader (this.filename);
@@ -116,8 +142,32 @@ public class FileController {
 		System.out.println("Something went wrong");
 		return null;
 	}
-	
-	//Getters and setters
+	public boolean isMyFileFilled(){
+		try{
+	         FileReader fr = new FileReader (this.filename);
+	         Scanner sc = new Scanner(fr);
+	         sc.useDelimiter(";");
+	         
+			 //read in the file line by line
+	         while (sc.hasNextLine()){
+	        	 fr.close();
+		         sc.close();
+		         
+		         return true;
+	         }
+	         sc.close();
+	         
+	      }
+	      catch (FileNotFoundException exception){
+	         System.out.println ("The file " + this.filename + " was not found.");
+	      }
+	      catch (IOException exception){
+	         System.out.println (exception);
+	      }
+		System.out.println("File's Empty");
+		return false;
+	}
+
 	public String getFilename() {
 		return filename;
 	}

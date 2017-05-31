@@ -358,9 +358,10 @@ public class OSD {
 		for(int i=1;i<sequence.length;i++){
 			if(i==1){
 				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
-			}else if((i)%3==0){
-				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|\n";
-			}else{
+			}else if((i-1)%4==0){
+				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
+			}
+			else{
 				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
 			}
 			total=total+Math.abs(prev-curr);

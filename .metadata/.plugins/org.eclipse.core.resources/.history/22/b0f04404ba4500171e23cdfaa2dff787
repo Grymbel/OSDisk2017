@@ -280,7 +280,6 @@ public class OSD {
 		return toRet;
 	}
 	
-	//Data formatting from predefined parameters and sequence
 	public void startData(){
 		
 		FileController fc = new FileController(inputData);
@@ -300,9 +299,7 @@ public class OSD {
 		fc.appendLine(toWrite);
 	}
 	
-	//Random data generation from predefined parameters
 	public void makeData(){
-		
 		FileController fc = new FileController(inputData);
 		
 		fc.clearTXT();
@@ -314,7 +311,6 @@ public class OSD {
 		toWrite.add(current+";");
 		int toAdd;
 
-		//Generates a random sequence without collision
 			for(int i=0;i<(inputLength-2);i++){
 				toAdd=((int) (Math.random()*cylinders));
 				
@@ -327,7 +323,6 @@ public class OSD {
 			}
 			fc.appendLine(toWrite);
 			
-			//Writes to the raw data
 			dataList.add(previous);
 			dataList.add(current);
 			
@@ -336,30 +331,22 @@ public class OSD {
 			}
 		}
 	
-	//Returns formatted text to display on the UI
 	public String getDataNicely(){
 		FileController ffc = new FileController(inputData);
 		return ffc.getDataNicely();
 	}
 	
-	//A function that returns a String showing the distance traveled by the pointer
-	//It also shows the arithmetic procedure to calculate the total distance traveled
 	public static String distanceFinder(int[] sequence){
 		
 		String totalDistance="Total distance: \n";
-		//Higher sequence is the sequence formatted with subtraction with absolute value symbols 
 		String higherSequence="";
 		int total=0;
 		int prev = sequence[0];
 		int curr = sequence[1];
 		
-		//Printing subtraction with absolute value restrictions
-		
 		for(int i=1;i<sequence.length;i++){
 			if(i==1){
 				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
-			}else if((i)%3==0){
-				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|\n";
 			}else{
 				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
 			}
@@ -372,12 +359,10 @@ public class OSD {
 				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
 			}
 		}
-		//Returns a string to display on the UI
 		return totalDistance + "\n= "+total;
 	}
 	
 	public static int[] toArray(ArrayList<Integer> arrayL){
-		//Converts and arraylist to array
 		int[] toRet = new int[arrayL.size()];
 		
 		for(int i=0;i<arrayL.size();i++){
@@ -387,7 +372,6 @@ public class OSD {
 		return toRet;
 	}
 
-	//A lot of getters and setters
 	public int getPrevious() {
 		return previous;
 	}
