@@ -188,10 +188,68 @@ public class OSD {
 				largerThan.add(nextNum);
 			}
 		}
-		smallerThan.add(0); //Returns to 0 after reaching the end
-		largerThan.add(this.current); //Dont Leave first Num out
+		Collections.sort(smallerThan); //Make everything ascending
+		Collections.sort(largerThan); //This too, ascending
 		
-		largerThan.add(this.getCylinders());
+		ArrayList<Integer> properOrder = new ArrayList<Integer>();
+		
+		if(this.previous<this.current){
+			properOrder.add(current);
+			properOrder.addAll(largerThan);
+			if(smallerThan.size()>0){
+				properOrder.add(this.cylinders-1);
+				properOrder.add(0);
+			for(int i = 0; i < smallerThan.size(); i++){
+				properOrder.add(smallerThan.get(i)); //Continues after 0
+				}
+			}
+		}
+		else if(this.current<this.previous){
+			properOrder.add(current);
+			for(int i = smallerThan.size()-1; i >=0; i--){
+				properOrder.add(smallerThan.get(i)); //Continues after 0
+				}
+			if(largerThan.size()>0){
+				properOrder.add(0);
+				properOrder.add(this.cylinders-1);
+				for(int i=largerThan.size()-1;i>=0;i--){
+					properOrder.add(largerThan.get(i));
+				}
+			}
+		}
+		
+		String orderOfAccess=""+properOrder.get(0);
+		
+		for(int i=1;i<properOrder.size();i++){
+			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
+		}
+		toRet[0]="CScan\n====\n";
+		toRet[1]=orderOfAccess;
+		toRet[2]=distanceFinder(toArray(properOrder));
+		
+		return toRet;
+	}
+	
+	public String[] CLook(){
+		String[] toRet = new String[3];
+		
+		ArrayList<Integer>smallerThan = new ArrayList<Integer>(); //Same as SCAN but without 2 lines
+		ArrayList<Integer>largerThan = new ArrayList<Integer>();
+		
+		int firstNum = dataList.get(0);
+		for(int i=1; i<dataList.size();i++){
+			int nextNum = dataList.get(i);
+			if(nextNum < firstNum){
+				smallerThan.add(nextNum);
+			}
+			else if(nextNum > firstNum){
+				largerThan.add(nextNum);
+			}
+			else{
+				largerThan.add(nextNum);
+			}
+		}
+		largerThan.add(firstNum); //Dont Leave first Num out
 		
 		Collections.sort(smallerThan); //Make everything ascending
 		Collections.sort(largerThan); //This too, ascending
@@ -200,14 +258,7 @@ public class OSD {
 			largerThan.add(largerThan.size(), smallerThan.get(i)); //Continues after 0
 		}
 		
-		String orderOfAccess=""+largerThan.get(0);
-		
-		for(int i=1;i<largerThan.size();i++){
-			orderOfAccess=orderOfAccess+", "+largerThan.get(i);
-		}
-		toRet[0]="CSCAN\n====\n";
-		toRet[1]=orderOfAccess;
-		return toRet;
+		return null;
 	}
 	
 	public void startData(){
@@ -264,6 +315,42 @@ public class OSD {
 	public String getDataNicely(){
 		FileController ffc = new FileController(inputData);
 		return ffc.getDataNicely();
+	}
+	
+	public static String distanceFinder(int[] sequence){
+		
+		String totalDistance="Total distance: \n";
+		String higherSequence="";
+		int total=0;
+		int prev = sequence[0];
+		int curr = sequence[1];
+		
+		for(int i=1;i<sequence.length;i++){
+			if(i==1){
+				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
+			}else{
+				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
+			}
+			total=total+Math.abs(prev-curr);
+			
+			if(i==1){
+				higherSequence = higherSequence+Math.abs(prev-curr);
+			}
+			else{
+				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
+			}
+		}
+		return totalDistance + "\n= "+total;
+	}
+	
+	public static int[] toArray(ArrayList<Integer> arrayL){
+		int[] toRet = new int[arrayL.size()];
+		
+		for(int i=0;i<arrayL.size();i++){
+			toRet[i]=arrayL.get(i);
+		}
+		
+		return toRet;
 	}
 
 	public int getPrevious() {

@@ -99,6 +99,7 @@ public class OSDController {
     	String[] strings = osd.CScan();
     	
     	taPath.setText(strings[0]+strings[1]);
+    	taDistance.setText(strings[2]);
     }
 
     @FXML
