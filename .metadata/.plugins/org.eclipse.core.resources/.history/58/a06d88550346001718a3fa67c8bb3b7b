@@ -315,7 +315,7 @@ public class OSD {
 		int toAdd;
 
 		//Generates a random sequence without collision
-			for(int i=0;i<(seqLength);i++){
+			for(int i=0;i<(seqLength-2);i++){
 				toAdd=((int) (Math.random()*cylinders));
 				
 				if(!toWrite.contains(toAdd+";")&&toAdd!=previous&&toAdd!=current){

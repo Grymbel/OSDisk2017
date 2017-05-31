@@ -10,20 +10,20 @@ public class OSD {
 	private int current;
 	private int cylinders;
 	
-	private int seqLength;
+	private int inputLength;
 	private ArrayList<Integer> dataList = new ArrayList<Integer>();
 	
 	//Construct with 4 integers, used for the random generator
 	public OSD(int prev, int curr, int cyl, int inputLength){
 		
 		if(inputLength>cyl){
-			System.out.println("Sequence Length larger than CYL");
+			System.out.println("InputLength-2 Larger than CYL");
 		}
 		else{
 		this.previous=prev;
 		this.current=curr;
 		this.cylinders=cyl;
-		this.seqLength=inputLength;
+		this.inputLength=inputLength;
 		}
 	}
 	//Construct with a predefined sequence, used for the pre-made data input
@@ -32,15 +32,15 @@ public class OSD {
 		this.previous=prev;
 		this.current=curr;
 		this.cylinders=cyl;
-		this.seqLength=0;
+		this.inputLength=0;
 		Scanner sc = new Scanner(sequence);
 		sc.useDelimiter(",");
 		
 		while(sc.hasNext()){
 			this.dataList.add(Integer.parseInt(sc.next()));
-			seqLength++;
+			inputLength++;
 		}
-		if(seqLength>cyl){
+		if(inputLength>cyl){
 			System.out.println("INPUT LENGTH LONGER THAN CYNLINDERS ALLOW");
 		}
 		sc.close();
@@ -315,7 +315,7 @@ public class OSD {
 		int toAdd;
 
 		//Generates a random sequence without collision
-			for(int i=0;i<(seqLength);i++){
+			for(int i=0;i<(inputLength-2);i++){
 				toAdd=((int) (Math.random()*cylinders));
 				
 				if(!toWrite.contains(toAdd+";")&&toAdd!=previous&&toAdd!=current){
@@ -339,7 +339,7 @@ public class OSD {
 	//Returns formatted text to display on the UI
 	public String getDataNicely(){
 		String toRet="";
-		//Breakline every 8 for readability
+		int every8=1;
 		FileController ffc = new FileController(inputData);
 		Scanner sc = new Scanner(ffc.printOut());
 		
@@ -347,10 +347,13 @@ public class OSD {
 		sc.next();
 		
 		toRet="Previous: "+sc.next()+"\n";
-		toRet=toRet+"Current: "+sc.next()+"\n"+"Sequence: \n";
+		toRet=toRet+"Current: "+sc.next()+"\n"+"Sequence: ";
 		
 		while(sc.hasNext()){
-			if(sc.hasNext()==true){
+			if(every8%8==0){
+			toRet = toRet + sc.next()+"\n";
+			}
+			else if(sc.hasNext()==true){
 				toRet = toRet +sc.next()+", ";
 			}
 			else{
@@ -431,11 +434,11 @@ public class OSD {
 	}
 
 	public int getInputLength() {
-		return seqLength;
+		return inputLength;
 	}
 
 	public void setInputLength(int inputLength) {
-		this.seqLength = inputLength;
+		this.inputLength = inputLength;
 	}
 
 	public ArrayList<Integer> getDataList() {

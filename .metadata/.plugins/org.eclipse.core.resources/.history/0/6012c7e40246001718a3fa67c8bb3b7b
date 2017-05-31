@@ -18,7 +18,7 @@
             <TextField fx:id="tfPrev" layoutX="14.0" layoutY="63.0" promptText="Previous Value" />
             <TextField fx:id="tfCurr" layoutX="14.0" layoutY="98.0" promptText="Current Value" />
             <TextField fx:id="tfCyl" layoutX="14.0" layoutY="133.0" promptText="Cylinders" />
-            <TextField fx:id="tfInputs" layoutX="14.0" layoutY="168.0" promptText="Sequence Length" />
+            <TextField fx:id="tfInputs" layoutX="14.0" layoutY="168.0" promptText="Input Count" />
             <TextArea fx:id="taOutput" editable="false" layoutX="194.0" layoutY="58.0" prefHeight="176.0" prefWidth="300.0" promptText="Make some data" wrapText="true" />
             <Text layoutX="194.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Created Data:" />
             <Button fx:id="btnLoadData" layoutX="500.0" layoutY="212.0" mnemonicParsing="false" onAction="#loadDatas" text="Load Data!" />
