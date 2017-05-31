@@ -48,7 +48,7 @@ public class OSDController {
     private Button btnSSTF;
 
     @FXML
-    private Button btnCLook;
+    private Button btnCLcan;
 
     @FXML
     private Button btnCScan;
@@ -104,11 +104,7 @@ public class OSDController {
 
     @FXML
     void doCLook(ActionEvent event) {
-    	OSD osd=new OSD();
-    	String[] strings = osd.CLook();
     	
-    	taPath.setText(strings[0]+strings[1]);
-    	taDistance.setText(strings[2]);
     }
     
 	public void initialize(){

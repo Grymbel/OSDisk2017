@@ -73,10 +73,10 @@ public class OSD {
 		for(int i=2;i<this.dataList.size();i++){
 			sequence.add(this.dataList.get(i));
 		}
-		String orderOfAccess = "Order of Access: "+this.current;
+		String orderOfAccess = "Order of Access: "+sequence.get(0);
 		
-		for(int i=0;i<sequence.size();i++){
-			orderOfAccess=orderOfAccess+", "+sequence.get(i);
+		for(int i=1;i<this.dataList.size();i++){
+			orderOfAccess=orderOfAccess+sequence.get(i)+", ";
 		}
 		toRet[1]=orderOfAccess;
 		toRet[2]=distanceFinder(toArray(sequence));
@@ -114,7 +114,7 @@ public class OSD {
 		}
 		toRet[0]="SSTF\n====\n";
 		
-		String orderOfAccess = "Order of Access: "+this.current;
+		String orderOfAccess = "Order Of Access: "+this.current;
 		
 		for(int p=0;p<sequence.size();p++){
 			orderOfAccess=orderOfAccess+", "+sequence.get(p);

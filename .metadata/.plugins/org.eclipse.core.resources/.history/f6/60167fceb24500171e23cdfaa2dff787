@@ -40,7 +40,7 @@
                <children>
                   <Button fx:id="btnFCFS" mnemonicParsing="false" onAction="#doFCFS" text="FCFS" />
                   <Button fx:id="btnSSTF" mnemonicParsing="false" onAction="#doSSTF" text="SSTF" GridPane.rowIndex="1" />
-                  <Button fx:id="btnCLook" mnemonicParsing="false" onAction="#doCLook" text="CLook" GridPane.rowIndex="2" />
+                  <Button fx:id="btnScan" mnemonicParsing="false" onAction="#doScan" text="Scan" GridPane.rowIndex="2" />
                   <Button fx:id="btnCScan" mnemonicParsing="false" onAction="#doCScan" text="CScan" GridPane.rowIndex="3" />
                </children>
             </GridPane>

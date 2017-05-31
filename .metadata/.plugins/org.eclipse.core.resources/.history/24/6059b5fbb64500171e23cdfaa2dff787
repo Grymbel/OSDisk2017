@@ -114,7 +114,7 @@ public class OSD {
 		}
 		toRet[0]="SSTF\n====\n";
 		
-		String orderOfAccess = "Order of Access: "+this.current;
+		String orderOfAccess = "Order Of Access: "+this.current;
 		
 		for(int p=0;p<sequence.size();p++){
 			orderOfAccess=orderOfAccess+", "+sequence.get(p);

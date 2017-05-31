@@ -68,18 +68,38 @@ public class OSD {
 		
 		toRet[0]="FCFS\n====\n";
 		
-		ArrayList<Integer> sequence = new ArrayList<Integer>();
+		String orderOfAccess = "Order of Access: ";
 		
-		for(int i=2;i<this.dataList.size();i++){
-			sequence.add(this.dataList.get(i));
-		}
-		String orderOfAccess = "Order of Access: "+this.current;
-		
-		for(int i=0;i<sequence.size();i++){
-			orderOfAccess=orderOfAccess+", "+sequence.get(i);
+		for(int i=1;i<this.dataList.size();i++){
+			orderOfAccess=orderOfAccess+this.dataList.get(i)+", ";
 		}
 		toRet[1]=orderOfAccess;
-		toRet[2]=distanceFinder(toArray(sequence));
+		
+		String totalDistance="Total Distance = ";
+		String higherSequence="";
+		
+		int total=0;
+		
+		for(int i=2;i<this.dataList.size();i++){
+			int prev = dataList.get(i-1);
+			int curr = dataList.get(i);
+			if(i==2){
+				totalDistance = totalDistance + "|"+prev+"-"+curr+"|";
+			}else{
+			totalDistance = totalDistance + "+|"+prev+"-"+curr+"|";
+			}
+			total=total+Math.abs(prev-curr);
+			
+			if(i==2){
+				higherSequence = higherSequence+Math.abs(prev-curr);
+			}
+			else{
+				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
+			}
+		}
+		
+		totalDistance = totalDistance +"\n="+ higherSequence + "\n="+total;
+		toRet[2]=totalDistance;
 		return toRet;
 	}
 	
@@ -88,13 +108,8 @@ public class OSD {
 		String[] toRet = new String[3];
 		
 		int current = this.current;
-		
 		ArrayList<Integer> sequence = new ArrayList<Integer>();
 
-		for(int i=2;i<this.dataList.size();i++){
-			sequence.add(this.dataList.get(i));
-		}
-		
 		int ii=-1;
 		for(int i=0;i<sequence.size();i++){
 			int minimum=Integer.MAX_VALUE;
@@ -114,7 +129,7 @@ public class OSD {
 		}
 		toRet[0]="SSTF\n====\n";
 		
-		String orderOfAccess = "Order of Access: "+this.current;
+		String orderOfAccess = "Order Of Access: "+this.current;
 		
 		for(int p=0;p<sequence.size();p++){
 			orderOfAccess=orderOfAccess+", "+sequence.get(p);
@@ -177,7 +192,7 @@ public class OSD {
 			}
 		}
 		
-		String orderOfAccess="Order of Access: "+properOrder.get(0);
+		String orderOfAccess=""+properOrder.get(0);
 		
 		for(int i=1;i<properOrder.size();i++){
 			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
@@ -237,7 +252,7 @@ public class OSD {
 			}
 		}
 		
-		String orderOfAccess="Order of Access: "+properOrder.get(0);
+		String orderOfAccess=""+properOrder.get(0);
 		
 		for(int i=1;i<properOrder.size();i++){
 			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
@@ -306,6 +321,8 @@ public class OSD {
 	}
 	
 	public static String distanceFinder(int[] sequence){
+		
+		System.out.println(sequence.length);
 		
 		String totalDistance="Total distance: \n";
 		String higherSequence="";
