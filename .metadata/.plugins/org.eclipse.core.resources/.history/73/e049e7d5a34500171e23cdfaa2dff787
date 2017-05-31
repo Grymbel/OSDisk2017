@@ -167,17 +167,11 @@ public class OSD {
 	}
 	
 	public String[] CScan(){
-		String[] toRet = new String[3];
-		
 		ArrayList<Integer>smallerThan = new ArrayList<Integer>();
 		ArrayList<Integer>largerThan = new ArrayList<Integer>();
-		ArrayList<Integer> sequence = new ArrayList<Integer>();
 		
-		for(int i=2;i<this.dataList.size();i++){
-			sequence.add(this.dataList.get(i));
-		}
-		for(int i=0; i<sequence.size();i++){
-			int nextNum = sequence.get(i);
+		for(int i=1; i<dataList.size();i++){
+			int nextNum = dataList.get(i);
 			if(nextNum < this.current){
 				smallerThan.add(nextNum);
 			}
@@ -200,14 +194,7 @@ public class OSD {
 			largerThan.add(largerThan.size(), smallerThan.get(i)); //Continues after 0
 		}
 		
-		String orderOfAccess=""+largerThan.get(0);
-		
-		for(int i=1;i<largerThan.size();i++){
-			orderOfAccess=orderOfAccess+", "+largerThan.get(i);
-		}
-		toRet[0]="CSCAN\n====\n";
-		toRet[1]=orderOfAccess;
-		return toRet;
+		return largerThan;
 	}
 	
 	public void startData(){

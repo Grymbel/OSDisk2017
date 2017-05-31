@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class OSD {
@@ -163,50 +162,6 @@ public class OSD {
 			curr=sequence[i];
 		}
 		toRet[2]=totalDistance+"\n="+higherSequence+"\n="+total;
-		return toRet;
-	}
-	
-	public String[] CScan(){
-		String[] toRet = new String[3];
-		
-		ArrayList<Integer>smallerThan = new ArrayList<Integer>();
-		ArrayList<Integer>largerThan = new ArrayList<Integer>();
-		ArrayList<Integer> sequence = new ArrayList<Integer>();
-		
-		for(int i=2;i<this.dataList.size();i++){
-			sequence.add(this.dataList.get(i));
-		}
-		for(int i=0; i<sequence.size();i++){
-			int nextNum = sequence.get(i);
-			if(nextNum < this.current){
-				smallerThan.add(nextNum);
-			}
-			else if(nextNum > this.current){
-				largerThan.add(nextNum);
-			}
-			else{
-				largerThan.add(nextNum);
-			}
-		}
-		smallerThan.add(0); //Returns to 0 after reaching the end
-		largerThan.add(this.current); //Dont Leave first Num out
-		
-		largerThan.add(this.getCylinders());
-		
-		Collections.sort(smallerThan); //Make everything ascending
-		Collections.sort(largerThan); //This too, ascending
-		
-		for(int i = 0; i < smallerThan.size()-1; i++){
-			largerThan.add(largerThan.size(), smallerThan.get(i)); //Continues after 0
-		}
-		
-		String orderOfAccess=""+largerThan.get(0);
-		
-		for(int i=1;i<largerThan.size();i++){
-			orderOfAccess=orderOfAccess+", "+largerThan.get(i);
-		}
-		toRet[0]="CSCAN\n====\n";
-		toRet[1]=orderOfAccess;
 		return toRet;
 	}
 	

@@ -171,13 +171,10 @@ public class OSD {
 		
 		ArrayList<Integer>smallerThan = new ArrayList<Integer>();
 		ArrayList<Integer>largerThan = new ArrayList<Integer>();
-		ArrayList<Integer> sequence = new ArrayList<Integer>();
 		
-		for(int i=2;i<this.dataList.size();i++){
-			sequence.add(this.dataList.get(i));
-		}
-		for(int i=0; i<sequence.size();i++){
-			int nextNum = sequence.get(i);
+		
+		for(int i=1; i<dataList.size();i++){
+			int nextNum = dataList.get(i);
 			if(nextNum < this.current){
 				smallerThan.add(nextNum);
 			}

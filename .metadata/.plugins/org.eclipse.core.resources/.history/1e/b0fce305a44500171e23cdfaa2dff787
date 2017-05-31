@@ -41,13 +41,13 @@
                   <Button fx:id="btnFCFS" mnemonicParsing="false" onAction="#doFCFS" text="FCFS" />
                   <Button fx:id="btnSSTF" mnemonicParsing="false" onAction="#doSSTF" text="SSTF" GridPane.rowIndex="1" />
                   <Button fx:id="btnScan" mnemonicParsing="false" onAction="#doScan" text="Scan" GridPane.rowIndex="2" />
-                  <Button fx:id="btnCScan" mnemonicParsing="false" onAction="#doCScan" text="CScan" GridPane.rowIndex="3" />
+                  <Button fx:id="btnLook" mnemonicParsing="false" onAction="#doLook" text="Look" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <TextArea fx:id="taPath" layoutX="150.0" layoutY="320.0" prefHeight="200.0" prefWidth="275.0" />
-            <TextArea fx:id="taDistance" layoutX="445.0" layoutY="322.0" prefHeight="200.0" prefWidth="275.0" />
-            <Text layoutX="150.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Taken:" />
-            <Text layoutX="445.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Distance Run: " />
+            <TextArea fx:id="taPath" layoutX="194.0" layoutY="322.0" prefHeight="200.0" prefWidth="200.0" />
+            <TextArea fx:id="taDistance" layoutX="471.0" layoutY="322.0" prefHeight="200.0" prefWidth="200.0" />
+            <Text layoutX="194.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Path Taken:" />
+            <Text layoutX="471.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Distance Run: " />
          </children>
       </AnchorPane>
    </children>

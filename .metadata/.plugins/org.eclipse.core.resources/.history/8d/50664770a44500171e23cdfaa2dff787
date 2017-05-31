@@ -51,7 +51,7 @@ public class OSDController {
     private Button btnScan;
 
     @FXML
-    private Button btnCScan;
+    private Button btnLook;
 
     @FXML
     private TextArea taPath;
