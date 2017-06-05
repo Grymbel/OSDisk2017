@@ -339,7 +339,7 @@ public class OSD {
 		for(int i=1;i<properOrder.size();i++){
 			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
 		}
-		toRet[0]="Look\n====\n";
+		toRet[0]="CLook\n====\n";
 		toRet[1]=orderOfAccess;
 		//Distance finder is defined below, toArray converts an ArrayList to an Array
 		toRet[2]=distanceFinder(toArray(properOrder));
@@ -390,8 +390,9 @@ public class OSD {
 				properOrder.addAll(largerThan);
 				if(smallerThan.size()>0){
 					properOrder.add(this.cylinders-1);
-				for(int i = smallerThan.size(); i >0; i--){
-					properOrder.add(smallerThan.get(i-1)); 
+					properOrder.add(0);
+				for(int i = 0; i < smallerThan.size(); i++){
+					properOrder.add(smallerThan.get(i)); 
 					}
 				}
 			}
@@ -402,7 +403,8 @@ public class OSD {
 					}
 				if(largerThan.size()>0){
 					properOrder.add(0);
-					for(int i=0;i<largerThan.size();i++){
+					properOrder.add(this.cylinders-1);
+					for(int i=largerThan.size()-1;i>=0;i--){
 						properOrder.add(largerThan.get(i));
 					}
 				}
@@ -413,7 +415,7 @@ public class OSD {
 			for(int i=1;i<properOrder.size();i++){
 				orderOfAccess=orderOfAccess+", "+properOrder.get(i);
 			}
-			toRet[0]="Scan\n====\n";
+			toRet[0]="CScan\n====\n";
 			toRet[1]=orderOfAccess;
 			//Distance finder is defined below, toArray converts an ArrayList to an Array
 			toRet[2]=distanceFinder(toArray(properOrder));

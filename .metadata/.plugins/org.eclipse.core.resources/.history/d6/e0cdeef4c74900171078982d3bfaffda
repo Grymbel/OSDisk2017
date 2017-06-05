@@ -52,12 +52,6 @@ public class OSDController {
 
     @FXML
     private Button btnCScan;
-    
-    @FXML
-    private Button btnLook;
-
-    @FXML
-    private Button btnScan;
 
     @FXML
     private TextArea taPath;
@@ -118,26 +112,6 @@ public class OSDController {
     void doCLook(ActionEvent event) {
     	OSD osd=new OSD();
     	String[] strings = osd.CLook();
-    	
-    	taPath.setText(strings[0]+strings[1]);
-    	taDistance.setText(strings[2]);
-    }
-    
-    //Initiate the Scan Process
-    @FXML
-    void doScan(ActionEvent event) {
-    	OSD osd=new OSD();
-    	String[] strings = osd.Scan();
-    	
-    	taPath.setText(strings[0]+strings[1]);
-    	taDistance.setText(strings[2]);
-    }
-
-    //Initiate the Look process
-    @FXML
-    void doLook(ActionEvent event) {
-    	OSD osd=new OSD();
-    	String[] strings = osd.Look();
     	
     	taPath.setText(strings[0]+strings[1]);
     	taDistance.setText(strings[2]);

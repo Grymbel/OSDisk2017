@@ -390,6 +390,7 @@ public class OSD {
 				properOrder.addAll(largerThan);
 				if(smallerThan.size()>0){
 					properOrder.add(this.cylinders-1);
+					properOrder.add(0);
 				for(int i = smallerThan.size(); i >0; i--){
 					properOrder.add(smallerThan.get(i-1)); 
 					}
@@ -402,7 +403,8 @@ public class OSD {
 					}
 				if(largerThan.size()>0){
 					properOrder.add(0);
-					for(int i=0;i<largerThan.size();i++){
+					properOrder.add(this.cylinders-1);
+					for(int i=largerThan.size()-1;i>=0;i--){
 						properOrder.add(largerThan.get(i));
 					}
 				}
