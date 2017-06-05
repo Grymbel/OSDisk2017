@@ -1,0 +1,455 @@
+package application;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class OSD {
+	private String inputData = System.getProperty("user.dir")+"/src/application/data/OSDData.txt";
+	private int previous;
+	private int current;
+	private int cylinders;
+	
+	private int seqLength;
+	private ArrayList<Integer> dataList = new ArrayList<Integer>();
+	
+	//Construct with 4 integers, used for the random generator
+	public OSD(int prev, int curr, int cyl, int inputLength){
+		
+		if(inputLength>cyl){
+			System.out.println("Sequence Length larger than CYL");
+		}
+		else{
+		this.previous=prev;
+		this.current=curr;
+		this.cylinders=cyl;
+		this.seqLength=inputLength;
+		}
+	}
+	//Construct with a predefined sequence, used for the pre-made data input
+	public OSD(int prev, int curr, int cyl, String sequence){
+		
+		this.previous=prev;
+		this.current=curr;
+		this.cylinders=cyl;
+		this.seqLength=0;
+		Scanner sc = new Scanner(sequence);
+		sc.useDelimiter(",");
+		
+		while(sc.hasNext()){
+			this.dataList.add(Integer.parseInt(sc.next()));
+			seqLength++;
+		}
+		if(seqLength>cyl){
+			System.out.println("INPUT LENGTH LONGER THAN CYNLINDERS ALLOW");
+		}
+		sc.close();
+	}
+	//Constructor without parameters that reads from the data TXT for the controller
+	public OSD(){
+		FileController fc = new FileController(inputData);
+		Scanner sc = new Scanner(fc.printOut());
+		
+		sc.useDelimiter(";");
+		
+		this.cylinders=Integer.parseInt(sc.next().replace("&", ""));
+		this.previous=Integer.parseInt(sc.next());
+		this.dataList.add(this.previous);
+		this.current=Integer.parseInt(sc.next());
+		this.dataList.add(this.current);
+		
+		while(sc.hasNext()){
+			this.dataList.add(Integer.parseInt(sc.next()));
+		}
+		sc.close();
+	}
+	
+	//First come, first served
+	public String[] FCFS(){
+		//A 3 part array containing strings to display on the UI
+		String[] toRet = new String[3];
+		
+		toRet[0]="FCFS\n====\n";
+		
+		ArrayList<Integer> sequence = new ArrayList<Integer>();
+		
+		//Copying relevant section of the raw data (The Sequence) to an easier to use Array List
+		sequence.add(this.current);
+		for(int i=2;i<this.dataList.size();i++){
+			sequence.add(this.dataList.get(i));
+		}
+		
+		//Writing the order of access
+		String orderOfAccess = "Order of Access: "+this.current;
+		
+		for(int i=0;i<sequence.size();i++){
+			orderOfAccess=orderOfAccess+", "+sequence.get(i);
+		}
+		
+		//Filling the array to return
+		toRet[1]=orderOfAccess;
+		toRet[2]=distanceFinder(toArray(sequence));
+		
+		//Distance finder is defined below, toArray converts an ArrayList to an Array
+		return toRet;
+	}
+	
+	
+	//Shortest Seek Time First
+	public String[] SSTF(){
+		
+		
+		//Making the array of Strings to display on the UI
+		String[] toRet = new String[3];
+		
+		ArrayList<Integer> sequence = new ArrayList<Integer>();
+
+		//Copying relevant section of the raw data (The Sequence) to an easier to use Array List
+		
+		for(int i=2;i<this.dataList.size();i++){
+			sequence.add(this.dataList.get(i));
+		}
+		
+		//Finding the shortest seek times
+		int ii=-1;
+		int curr=this.current;
+		for(int i=0;i<sequence.size();i++){
+			int minimum=Integer.MAX_VALUE;
+			ii=i;
+			for(int j=i;j<sequence.size();j++){
+				int distance = Math.abs(curr-sequence.get(j));
+				
+				if(distance<minimum){
+					ii=j;
+					minimum=distance;
+				}
+			}
+			//Building the new sequence
+			int tmp=sequence.get(i);
+			sequence.set(i, sequence.get(ii));
+			sequence.set(ii, tmp);
+			curr=sequence.get(i);
+		}
+		toRet[0]="SSTF\n====\n";
+		
+		//Writing the new sequence to the UI
+		String orderOfAccess = "Order of Access: "+this.current;
+		
+		for(int p=0;p<sequence.size();p++){
+			orderOfAccess=orderOfAccess+", "+sequence.get(p);
+		}
+		toRet[1]=orderOfAccess;
+		//Distance finder is defined below, toArray converts an ArrayList to an Array
+		ArrayList<Integer> distanceToFind = new ArrayList<Integer>();
+		distanceToFind.add(this.current);
+		for(int i=0;i<sequence.size();i++){
+			distanceToFind.add(sequence.get(i));
+		}
+		toRet[2]=distanceFinder(toArray(distanceToFind));
+		return toRet;
+	}
+	//The CScan operation
+	public String[] CScan(){
+		String[] toRet = new String[3];
+		//SmallerThan = Smaller than the current
+		//LargerThan = Larger than the current
+		
+		ArrayList<Integer>smallerThan = new ArrayList<Integer>();
+		ArrayList<Integer>largerThan = new ArrayList<Integer>();
+		ArrayList<Integer> sequence = new ArrayList<Integer>();
+		
+		//Copying relevant section of the raw data (The Sequence) to an easier to use Array List
+		
+		for(int i=2;i<this.dataList.size();i++){
+			sequence.add(this.dataList.get(i));
+		}
+		
+		//Splitting the raw sequence into SmallerThan and LargerThan
+		for(int i=0; i<sequence.size();i++){
+			int nextNum = sequence.get(i);
+			if(nextNum < this.current){
+				smallerThan.add(nextNum);
+			}
+			else if(nextNum > this.current){
+				largerThan.add(nextNum);
+			}
+			else{
+				largerThan.add(nextNum);
+			}
+		}
+		Collections.sort(smallerThan); //Make everything ascending
+		Collections.sort(largerThan); //This too, ascending
+		
+		//The arraylist where we will concatenate the two split lists with the minimum and maximum values 
+		//(If needed)
+		ArrayList<Integer> properOrder = new ArrayList<Integer>();
+		
+		
+		//Check which order the pointer is moving (Ascending or descending)
+		if(this.previous<this.current){
+			properOrder.add(current);
+			properOrder.addAll(largerThan);
+			if(smallerThan.size()>0){
+				properOrder.add(this.cylinders-1);
+				properOrder.add(0);
+			for(int i = 0; i < smallerThan.size(); i++){
+				properOrder.add(smallerThan.get(i)); 
+				}
+			}
+		}
+		else if(this.current<this.previous){
+			properOrder.add(current);
+			for(int i = smallerThan.size()-1; i >=0; i--){
+				properOrder.add(smallerThan.get(i)); //Continues after 0
+				}
+			if(largerThan.size()>0){
+				properOrder.add(0);
+				properOrder.add(this.cylinders-1);
+				for(int i=largerThan.size()-1;i>=0;i--){
+					properOrder.add(largerThan.get(i));
+				}
+			}
+		}
+		//Writing the order of access from the proper order we created earlier
+		String orderOfAccess="Order of Access: "+properOrder.get(0);
+		
+		for(int i=1;i<properOrder.size();i++){
+			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
+		}
+		toRet[0]="CScan\n====\n";
+		toRet[1]=orderOfAccess;
+		//Distance finder is defined below, toArray converts an ArrayList to an Array
+		toRet[2]=distanceFinder(toArray(properOrder));
+		
+		return toRet;
+	}
+	
+	public String[] CLook(){
+		//This works the same as CScan, except it does not attach the maximum value and 0 to the proper order
+		String[] toRet = new String[3];
+		
+		ArrayList<Integer>smallerThan = new ArrayList<Integer>();
+		ArrayList<Integer>largerThan = new ArrayList<Integer>();
+		ArrayList<Integer> sequence = new ArrayList<Integer>();
+		
+		for(int i=2;i<this.dataList.size();i++){
+			sequence.add(this.dataList.get(i));
+		}
+		for(int i=0; i<sequence.size();i++){
+			int nextNum = sequence.get(i);
+			if(nextNum < this.current){
+				smallerThan.add(nextNum);
+			}
+			else if(nextNum > this.current){
+				largerThan.add(nextNum);
+			}
+			else{
+				largerThan.add(nextNum);
+			}
+		} 
+		Collections.sort(smallerThan); //Make everything ascending
+		Collections.sort(largerThan); //This too, ascending
+		
+		ArrayList<Integer> properOrder = new ArrayList<Integer>();
+		
+		if(this.previous<this.current){
+			properOrder.add(this.current);
+			properOrder.addAll(largerThan);
+			if(smallerThan.size()>0){
+			for(int i = 0; i < smallerThan.size(); i++){
+				properOrder.add(smallerThan.get(i)); 
+				}
+			}
+		}
+		else if(this.current<this.previous){
+			properOrder.add(this.current);
+			for(int i = smallerThan.size()-1; i >=0; i--){
+				properOrder.add(smallerThan.get(i)); //Continues after 0
+				}
+			if(largerThan.size()>0){
+				for(int i=largerThan.size()-1;i>=0;i--){
+					properOrder.add(largerThan.get(i));
+				}
+			}
+		}
+		
+		String orderOfAccess="Order of Access: "+properOrder.get(0);
+		
+		for(int i=1;i<properOrder.size();i++){
+			orderOfAccess=orderOfAccess+", "+properOrder.get(i);
+		}
+		toRet[0]="CLook\n====\n";
+		toRet[1]=orderOfAccess;
+		//Distance finder is defined below, toArray converts an ArrayList to an Array
+		toRet[2]=distanceFinder(toArray(properOrder));
+		
+		return toRet;
+	}
+	
+	//Data formatting from predefined parameters and sequence
+	public void startData(){
+		
+		FileController fc = new FileController(inputData);
+		
+		fc.clearTXT();
+		
+		ArrayList<String> toWrite = new ArrayList<String>();
+		toWrite.add(this.cylinders+"&;");
+		
+		toWrite.add(this.previous+";");
+		toWrite.add(this.current+";");
+		
+		for(int o=0;o<this.dataList.size();o++){
+		toWrite.add(this.dataList.get(o)+";");
+		}
+		
+		fc.appendLine(toWrite);
+	}
+	
+	//Random data generation from predefined parameters
+	public void makeData(){
+		
+		FileController fc = new FileController(inputData);
+		
+		fc.clearTXT();
+		
+		ArrayList<String> toWrite = new ArrayList<String>();
+		toWrite.add(this.cylinders+"&;");
+		
+		toWrite.add(previous+";");
+		toWrite.add(current+";");
+		int toAdd;
+
+		//Generates a random sequence without collision
+			for(int i=0;i<(seqLength);i++){
+				toAdd=((int) (Math.random()*cylinders));
+				
+				if(!toWrite.contains(toAdd+";")&&toAdd!=previous&&toAdd!=current){
+					toWrite.add(toAdd+";");
+				}
+				else{
+					i--;
+				}
+			}
+			fc.appendLine(toWrite);
+			
+			//Writes to the raw data
+			dataList.add(previous);
+			dataList.add(current);
+			
+			for(int i=1;i<toWrite.size();i++){
+				dataList.add(Integer.parseInt(toWrite.get(i).replace(";", "")));
+			}
+		}
+	
+	//Returns formatted text to display on the UI
+	public String getDataNicely(){
+		String toRet="";
+		//Breakline every 8 for readability
+		FileController ffc = new FileController(inputData);
+		Scanner sc = new Scanner(ffc.printOut());
+		
+		sc.useDelimiter(";");
+		sc.next();
+		
+		toRet="Previous: "+sc.next()+"\n";
+		toRet=toRet+"Current: "+sc.next()+"\n"+"Sequence: \n";
+		
+		while(sc.hasNext()){
+			if(sc.hasNext()==true){
+				toRet = toRet +sc.next()+", ";
+			}
+			else{
+				toRet = toRet +sc.next();
+			}
+		}
+		sc.close();
+		return toRet;
+	}
+	
+	//A function that returns a String showing the distance traveled by the pointer
+	//It also shows the arithmetic procedure to calculate the total distance traveled
+	public static String distanceFinder(int[] sequence){
+		
+		String totalDistance="Total distance: \n";
+		//Higher sequence is the sequence formatted with subtraction with absolute value symbols 
+		String higherSequence="";
+		int total=0;
+		int prev = sequence[0];
+		int curr = sequence[1];
+		
+		//Printing subtraction with absolute value restrictions
+		
+		for(int i=1;i<sequence.length;i++){
+			if(i==1){
+				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
+			}else if((i)%3==0){
+				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|\n";
+			}else{
+				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
+			}
+			total=total+Math.abs(prev-curr);
+			
+			if(i==1){
+				higherSequence = higherSequence+Math.abs(prev-curr);
+			}
+			else{
+				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
+			}
+		}
+		//Returns a string to display on the UI
+		return totalDistance + "\n= "+total;
+	}
+	
+	public static int[] toArray(ArrayList<Integer> arrayL){
+		//Converts and arraylist to array
+		int[] toRet = new int[arrayL.size()];
+		
+		for(int i=0;i<arrayL.size();i++){
+			toRet[i]=arrayL.get(i);
+		}
+		
+		return toRet;
+	}
+
+	//A lot of getters and setters
+	public int getPrevious() {
+		return previous;
+	}
+
+	public void setPrevious(int previous) {
+		this.previous = previous;
+	}
+	public int getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(int current) {
+		this.current = current;
+	}
+
+	public int getCylinders() {
+		return cylinders;
+	}
+
+	public void setCylinders(int cylinders) {
+		this.cylinders = cylinders;
+	}
+
+	public int getInputLength() {
+		return seqLength;
+	}
+
+	public void setInputLength(int inputLength) {
+		this.seqLength = inputLength;
+	}
+
+	public ArrayList<Integer> getDataList() {
+		return dataList;
+	}
+
+	public void setDataList(ArrayList<Integer> dataList) {
+		this.dataList = dataList;
+	}
+}
+

@@ -74,15 +74,14 @@ public class OSD {
 		ArrayList<Integer> sequence = new ArrayList<Integer>();
 		
 		//Copying relevant section of the raw data (The Sequence) to an easier to use Array List
-		
+		sequence.add(this.current);
 		for(int i=2;i<this.dataList.size();i++){
 			sequence.add(this.dataList.get(i));
 		}
 		
 		//Writing the order of access
-		String orderOfAccess = "Order of Access: "+this.current;
-		
-		for(int i=0;i<sequence.size();i++){
+		String orderOfAccess = "Order of Access: "+sequence.get(0);
+		for(int i=1;i<sequence.size();i++){
 			orderOfAccess=orderOfAccess+", "+sequence.get(i);
 		}
 		
@@ -112,11 +111,12 @@ public class OSD {
 		
 		//Finding the shortest seek times
 		int ii=-1;
+		int curr=this.current;
 		for(int i=0;i<sequence.size();i++){
 			int minimum=Integer.MAX_VALUE;
 			ii=i;
 			for(int j=i;j<sequence.size();j++){
-				int distance = Math.abs(this.current-sequence.get(j));
+				int distance = Math.abs(curr-sequence.get(j));
 				
 				if(distance<minimum){
 					ii=j;
@@ -127,7 +127,7 @@ public class OSD {
 			int tmp=sequence.get(i);
 			sequence.set(i, sequence.get(ii));
 			sequence.set(ii, tmp);
-			this.current=sequence.get(i);
+			curr=sequence.get(i);
 		}
 		toRet[0]="SSTF\n====\n";
 		
@@ -139,7 +139,12 @@ public class OSD {
 		}
 		toRet[1]=orderOfAccess;
 		//Distance finder is defined below, toArray converts an ArrayList to an Array
-		toRet[2]=distanceFinder(toArray(sequence));
+		ArrayList<Integer> distanceToFind = new ArrayList<Integer>();
+		distanceToFind.add(this.current);
+		for(int i=0;i<sequence.size();i++){
+			distanceToFind.add(sequence.get(i));
+		}
+		toRet[2]=distanceFinder(toArray(distanceToFind));
 		return toRet;
 	}
 	//The CScan operation
@@ -375,6 +380,8 @@ public class OSD {
 		//Printing subtraction with absolute value restrictions
 		
 		for(int i=1;i<sequence.length;i++){
+			prev=sequence[i-1];
+			curr=sequence[i];
 			if(i==1){
 				totalDistance = totalDistance + "|"+sequence[i-1]+"-"+sequence[i]+"|";
 			}else if((i)%3==0){
@@ -382,17 +389,17 @@ public class OSD {
 			}else{
 				totalDistance = totalDistance + "+|"+sequence[i-1]+"-"+sequence[i]+"|";
 			}
-			total=total+Math.abs(prev-curr);
-			
 			if(i==1){
 				higherSequence = higherSequence+Math.abs(prev-curr);
 			}
 			else{
 				higherSequence = higherSequence+"+"+Math.abs(prev-curr);
 			}
+			total=total+Math.abs(prev-curr);
+			
 		}
 		//Returns a string to display on the UI
-		return totalDistance + "\n= "+total;
+		return totalDistance + "\n= "+higherSequence+"\n= "+total;
 	}
 	
 	public static int[] toArray(ArrayList<Integer> arrayL){
