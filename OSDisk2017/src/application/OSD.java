@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class OSD {
 	private String inputData = System.getProperty("user.dir")+"/src/application/data/OSDData.txt";
 	private int previous;
@@ -37,7 +40,18 @@ public class OSD {
 		sc.useDelimiter(",");
 		
 		while(sc.hasNext()){
-			this.dataList.add(Integer.parseInt(sc.next()));
+			String nextNode = sc.next();
+			this.dataList.add(Integer.parseInt(nextNode));
+			if(Integer.parseInt(nextNode) > cyl){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Data loaded is larger than Cylinder");
+				alert.setContentText("Load smaller values or higher Cylinder");
+	
+				alert.showAndWait();
+				this.dataList = null;
+				break;
+			}
 			seqLength++;
 		}
 		if(seqLength>cyl){
