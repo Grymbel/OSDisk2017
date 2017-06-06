@@ -13,16 +13,16 @@
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
          <children>
-            <Button fx:id="btnMakeData" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#makeDatas" text="Make Data!" />
-            <Text layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Set your data" wrappingWidth="135.4324951171875" />
+            <Button fx:id="btnMakeData" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#makeDatas" text="Generate" />
+            <Text layoutX="14.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Random Data Generator" wrappingWidth="135.4324951171875" />
             <TextField fx:id="tfPrev" layoutX="14.0" layoutY="63.0" promptText="Previous Value" />
             <TextField fx:id="tfCurr" layoutX="14.0" layoutY="98.0" promptText="Current Value" />
             <TextField fx:id="tfCyl" layoutX="14.0" layoutY="133.0" promptText="Cylinders" />
             <TextField fx:id="tfInputs" layoutX="14.0" layoutY="168.0" promptText="Sequence Length" />
             <TextArea fx:id="taOutput" editable="false" layoutX="194.0" layoutY="58.0" prefHeight="176.0" prefWidth="300.0" promptText="Make some data" wrapText="true" />
             <Text layoutX="194.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Created Data:" />
-            <Button fx:id="btnLoadData" layoutX="500.0" layoutY="212.0" mnemonicParsing="false" onAction="#loadDatas" text="Load Data!" />
-            <Text layoutX="500.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your own data:" />
+            <Button fx:id="btnLoadData" layoutX="500.0" layoutY="212.0" mnemonicParsing="false" onAction="#loadDatas" text="Load" />
+            <Text layoutX="500.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preset data input:" />
             <TextField fx:id="tfPrev1" layoutX="500.0" layoutY="63.0" prefHeight="25.0" prefWidth="290.0" promptText="Previous Value" />
             <TextField fx:id="tfCurr1" layoutX="500.0" layoutY="98.0" prefHeight="25.0" prefWidth="290.0" promptText="Current Value" />
             <TextField fx:id="tfCyl1" layoutX="500.0" layoutY="134.0" prefHeight="25.0" prefWidth="290.0" promptText="Cylinders" />

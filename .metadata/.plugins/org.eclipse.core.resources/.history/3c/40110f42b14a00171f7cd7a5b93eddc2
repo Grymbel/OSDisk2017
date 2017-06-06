@@ -1,0 +1,5 @@
+Entering invalid data sets may cause unintended behaviour or logical errors
+Check your own input if entering your own sets of data.
+
+For demonstration purposes and experimentation, there is a function to generate a data set
+randomly within preset parameters

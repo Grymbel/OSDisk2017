@@ -1,0 +1,12 @@
+Entering invalid data sets may cause unintended behaviour or logical errors
+Check your own input if entering your own sets of data.
+
+For demonstration purposes and experimentation, there is a function to generate a data set
+randomly within preset parameters
+
+When entering data, use only integers and commas where necessary. 
+
+-Matthew Ho
+-Lim Xuan Zheng
+-Darren Wee
+-Wong Wei Xuan
